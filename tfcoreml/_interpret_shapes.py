@@ -86,7 +86,7 @@ def _broadcast_op(op, blob_name, output_name, context):
       len(output_shape) == 4):
     return
 
-  #Handle the case when input shape is [C] 
+  #Handle the case when input shape is [C]
   #and output shape is [S,H,W,C]
   if len(input_shape) == 1 and \
      input_shape[0] == output_shape[3]:
@@ -103,7 +103,7 @@ def _broadcast_op(op, blob_name, output_name, context):
   context.dim_labels[blob_name] = dim_labels
 
 '''
-Identity: Applicable to all layers that do not change the 
+Identity: Applicable to all layers that do not change the
 rank of the input tensor and that do not rearrange the axis.
 '''
 def _identity(op, blob_name, output_name, context):
@@ -189,7 +189,9 @@ _SHAPE_TRANSLATOR_REGISTRY = {
     'Exp': _identity,
     'Split': _identity,
     'Sqrt': _identity,
-    'Pow': _identity
+    'Pow': _identity,
+    'StridedSlice': _terminate,
+    'Slice': _terminate
 }
 
 # TODO. Need to figure out the correct rule for adding these ops:
